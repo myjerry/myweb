@@ -4,6 +4,9 @@ package org.myjerry.myweb {
 	
 	import mx.core.FlexGlobals;
 	import mx.core.IVisualElement;
+	
+	import org.myjerry.myweb.model.Project;
+	import org.myjerry.myweb.views.ProjectHomeView;
 
 	public class ApplicationContext {
 		
@@ -27,6 +30,22 @@ package org.myjerry.myweb {
 		
 		public static function popView():IVisualElement {
 			return application.myViewStack.pop();
+		}
+		
+		public static function removeView(element:IVisualElement):Boolean {
+			return application.myViewStack.removeView(element);
+		}
+		
+		private static var _project:Project;
+		
+		public static function get project():Project {
+			return _project;
+		}
+		
+		public static function setProject(project:Project):void {
+			_project = project;
+			
+			pushView(new ProjectHomeView());
 		}
 	}
 }

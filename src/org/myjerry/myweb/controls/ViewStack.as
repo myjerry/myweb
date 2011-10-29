@@ -44,5 +44,21 @@ package org.myjerry.myweb.controls {
 			
 			return null;
 		}
+		
+		public function removeView(element:IVisualElement):Boolean {
+			if(currentIndex < 0) {
+				return false;
+			}
+			
+			for(var index:int = 0; index <= currentIndex; index++) {
+				if(this.getElementAt(index) === element) {
+					this.removeElementAt(index);
+					this.currentIndex--;
+					return true;
+				}
+			}
+			
+			return false;
+		}
 	}
 }

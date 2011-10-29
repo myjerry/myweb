@@ -37,6 +37,7 @@
 				}
 				
 				Project.createNewProject(this.projectName.text, this.folder.text);
+				ApplicationContext.removeView(this);
 			}
 			
 			protected function browseForFolder():void {
