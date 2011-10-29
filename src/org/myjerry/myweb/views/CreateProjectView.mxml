@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="100%" height="100%">
+	
+	<s:layout>
+		<s:VerticalLayout/>
+	</s:layout>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			
+			import org.myjerry.as3extensions.io.FolderChooser;
+			import org.myjerry.as3utils.AssertUtils;
+			import org.myjerry.as3utils.StringUtils;
+			import org.myjerry.myweb.ApplicationContext;
+			import org.myjerry.myweb.model.Project;
+			
+			protected function cancelProjectCreation():void {
+				ApplicationContext.popView();
+			}
+			
+			protected function createNewProject():void {
+				if(AssertUtils.isEmptyString(this.projectName.text)) {
+					Alert.show("Project name cannot be null/empty.");
+					return;
+				}
+				
+				if(AssertUtils.isEmptyString(this.folder.text)) {
+					Alert.show("Project folder cannot be null/empty.");
+					return;
+				}
+				
+				Project.createNewProject(this.projectName.text, this.folder.text);
+			}
+			
+			protected function browseForFolder():void {
+				new FolderChooser('Choose the folder to create project in...', folderChosen).choose();
+			}
+			
+			protected function folderChosen(folder:File):void {
+				this.folder.text = folder.nativePath;
+			}
+			
+			protected function onCheckBoxChange():void {
+				if(this.desktopDirectory.selected) {
+					this.folder.text = File.desktopDirectory.nativePath;
+					this.folder.enabled = false;
+				} else {
+					this.folder.enabled = true;
+				}
+			}
+		]]>
+	</fx:Script>
+	
+	<s:HGroup width="100%">
+		<s:Label text="Project Name" />
+		<s:TextInput id="projectName" />
+	</s:HGroup>
+	
+	<s:VGroup width="100%">
+		<s:CheckBox label="Use desktop directory" id="desktopDirectory" change="onCheckBoxChange()"/>
+		
+		<s:HGroup width="100%">
+			<s:Label text="Folder:" />
+			<s:TextInput id="folder" width="100%" />
+			<s:Button label="Browse..." click="browseForFolder();" />
+		</s:HGroup>
+	</s:VGroup>
+	
+	<s:HGroup width="100%">
+		<s:Spacer width="100%" />
+		
+		<s:Button label="Finish" click="createNewProject()" />
+		
+		<s:Spacer width="20" />
+		
+		<s:Button label="Cancel" click="cancelProjectCreation()" />
+	</s:HGroup>
+	
+</s:Group>
