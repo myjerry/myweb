@@ -4,11 +4,11 @@ package org.myjerry.myweb.db {
 	
 	import org.myjerry.as3extensions.db.Database;
 	
-	public class ProjectDB extends Database {
+	public class SiteDB extends Database {
 		
 		protected var dbFile:File = null;
 		
-		public function ProjectDB(file:File) {
+		public function SiteDB(file:File) {
 			this.dbFile = file;
 
 			super();

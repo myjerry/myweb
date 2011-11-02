@@ -10,18 +10,18 @@
 			
 			import org.myjerry.as3extensions.io.FileChooser;
 			import org.myjerry.myweb.ApplicationContext;
-			import org.myjerry.myweb.model.Project;
+			import org.myjerry.myweb.model.Site;
 			
-			private function createNewProject():void {
-				ApplicationContext.pushView(new CreateProjectView());
+			private function createNewSite():void {
+				ApplicationContext.pushView(new CreateSiteView());
 			}
 			
-			private function openProject():void {
-				new FileChooser('Choose the project file...', fileChosen).choose();
+			private function openSite():void {
+				new FileChooser('Choose the site file...', fileChosen).choose();
 			}
 			
 			private function fileChosen(file:File):void {
-				Project.openProject(file);
+				Site.openSite(file);
 			}
 		]]>
 	</fx:Script>
@@ -34,8 +34,8 @@
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	
-	<s:Button label="Create Project..." click="createNewProject()" />
+	<s:Button label="Create Site..." click="createNewSite()" />
 	
-	<s:Button label="Open Project" click="openProject()" />
+	<s:Button label="Open Site" click="openSite()" />
 	
 </s:Group>

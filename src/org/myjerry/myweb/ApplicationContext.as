@@ -5,8 +5,8 @@ package org.myjerry.myweb {
 	import mx.core.FlexGlobals;
 	import mx.core.IVisualElement;
 	
-	import org.myjerry.myweb.model.Project;
-	import org.myjerry.myweb.views.ProjectHomeView;
+	import org.myjerry.myweb.model.Site;
+	import org.myjerry.myweb.views.SiteHomeView;
 
 	public class ApplicationContext {
 		
@@ -36,16 +36,16 @@ package org.myjerry.myweb {
 			return application.myViewStack.removeView(element);
 		}
 		
-		private static var _project:Project;
+		private static var _site:Site;
 		
-		public static function get project():Project {
-			return _project;
+		public static function get site():Site {
+			return _site;
 		}
 		
-		public static function setProject(project:Project):void {
-			_project = project;
+		public static function setSite(site:Site):void {
+			_site = site;
 			
-			pushView(new ProjectHomeView());
+			pushView(new SiteHomeView());
 		}
 	}
 }

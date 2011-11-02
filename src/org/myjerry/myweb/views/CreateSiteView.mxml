@@ -19,7 +19,7 @@
 			import org.myjerry.as3utils.AssertUtils;
 			import org.myjerry.as3utils.StringUtils;
 			import org.myjerry.myweb.ApplicationContext;
-			import org.myjerry.myweb.model.Project;
+			import org.myjerry.myweb.model.Site;
 			
 			protected function cancelProjectCreation():void {
 				ApplicationContext.popView();
@@ -36,7 +36,7 @@
 					return;
 				}
 				
-				Project.createNewProject(this.projectName.text, this.folder.text);
+				Site.createNewSite(this.projectName.text, this.folder.text);
 				ApplicationContext.removeView(this);
 			}
 			
