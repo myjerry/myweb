@@ -16,6 +16,20 @@ package org.myjerry.myweb.service {
 			this.database = db;
 		}
 		
+		public function deleteTemplate(templateID:uint):Boolean {
+			var statement:SQLStatement = this.database.getStatement("DELETE FROM templates WHERE id = :id");
+			statement.parameters[":id"] = templateID;
+			
+			statement.execute();
+			
+			var result:SQLResult = statement.getResult();
+			if(result.rowsAffected == 1) {
+				return true;
+			}
+			
+			return false;
+		}
+		
 		public function saveTemplate(template:Template):Number {
 			var statement:SQLStatement;
 			
@@ -31,11 +45,12 @@ package org.myjerry.myweb.service {
 			
 			statement.execute();
 			
-			return statement.getResult().lastInsertRowID;
+			var result:SQLResult = statement.getResult();
+			return result.lastInsertRowID;
 		}
 		
 		public function getTemplates():ArrayList {
-			var vector:ArrayList = new ArrayList();
+			var templates:ArrayList = new ArrayList();
 			
 			var statement:SQLStatement = this.database.getStatement("SELECT * FROM templates");
 			statement.execute();
@@ -50,11 +65,11 @@ package org.myjerry.myweb.service {
 					template.name = row.name;
 					template.code = row.code;
 					
-					vector.addItem(template);
+					templates.addItem(template);
 				}
 			}
 			
-			return vector;
+			return templates;
 		}
 	}
 }

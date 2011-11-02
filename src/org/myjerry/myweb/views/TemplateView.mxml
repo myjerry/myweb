@@ -15,6 +15,7 @@
 	<fx:Script>
 		<![CDATA[
 			import mx.collections.ArrayList;
+			import mx.controls.Alert;
 			
 			import org.myjerry.myweb.ApplicationContext;
 			import org.myjerry.myweb.model.Template;
@@ -33,6 +34,10 @@
 				var temp:ArrayList = ApplicationContext.site.templateService.getTemplates();
 				templates.removeAll();
 				templates.addAll(temp);
+				
+				if(this.currentlyLoadedTemplate != null) {
+					this.templateList.selectedItem = this.currentlyLoadedTemplate;
+				}
 			}
 			
 			protected function reset():void {
@@ -46,14 +51,18 @@
 			}
 			
 			protected function saveTemplate():void {
-				var template:Template = null;
-				
 				if(this.currentlyLoadedTemplate != null) {
-					template = currentlyLoadedTemplate;
+					this.saveTemplateFromFormData(this.currentlyLoadedTemplate);
 				} else {
-					template = new Template();
+					this.saveTemplateFromFormData(new Template());
 				}
-				
+			}
+			
+			protected function saveNewTemplate():void {
+				this.saveTemplateFromFormData(new Template());
+			}
+			
+			private function saveTemplateFromFormData(template:Template):void {
 				template.name = this.templateName.text;
 				template.code = this.templateCode.text;
 				
@@ -65,11 +74,18 @@
 			}
 			
 			protected function openChosenTemplate():void {
-				
+				var chosen:Template = this.templateList.selectedItem as Template;
+				this.currentlyLoadedTemplate = chosen;
+				reset();
 			}
 			
 			protected function deleteChosenTemplate():void {
+				var chosen:Template = this.templateList.selectedItem as Template;
+				ApplicationContext.site.templateService.deleteTemplate(chosen.templateID);
+
+				this.currentlyLoadedTemplate = null;
 				
+				loadAllTemplates();
 			}
 		]]>
 	</fx:Script>
@@ -93,14 +109,14 @@
 	</s:HGroup>
 	
 	<s:HGroup width="100%" >
-		<s:Button label="Open" click="openChosenTemplate()" />
-		<s:Button label="Delete" click="deleteChosenTemplate()" />
+		<s:Button label="Open" click="openChosenTemplate()" enabled="{this.templateList.selectedIndex != -1}" />
+		<s:Button label="Delete" click="deleteChosenTemplate()" enabled="{this.templateList.selectedIndex != -1}" />
 		
 		<s:Spacer width="100%" />
 		
 		<s:Button label="Save" click="saveTemplate()" />
-		<s:Button label="Save As" />
-		<s:Button label="Cancel/Reset" />
+		<s:Button label="Save As" click="saveNewTemplate()" />
+		<s:Button label="Cancel/Reset" click="reset()" />
 	</s:HGroup>
 	
 </s:NavigatorContent>

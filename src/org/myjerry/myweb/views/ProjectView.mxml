@@ -5,7 +5,7 @@
 					width="100%" height="100%"
 					label="Projects" >
 	<s:layout>
-		<s:HorizontalLayout/>
+		<s:VerticalLayout />
 	</s:layout>
 	
 	<fx:Declarations>
@@ -14,80 +14,130 @@
 	
 	<fx:Script>
 		<![CDATA[
-			import mx.collections.ArrayCollection;
 			import mx.collections.ArrayList;
 			
 			import org.myjerry.myweb.ApplicationContext;
 			import org.myjerry.myweb.model.Project;
-			import org.myjerry.myweb.model.Template;
+			
+			private const projects:ArrayList = new ArrayList();
 			
 			private var currentlyLoadedProject:Project;
 			
 			override protected function initializationComplete():void {
 				super.initializationComplete();
 				
+				loadAllProjects();
+			}
+			
+			protected function loadAllProjects():void {
+				var proj:ArrayList = ApplicationContext.site.projectService.getAllProjects();
+				this.projects.removeAll();
+				this.projects.addAll(proj);
 				
+				if(this.currentlyLoadedProject != null) {
+					this.projectList.selectedItem = this.currentlyLoadedProject;
+				}
+			}
+			
+			protected function loadProject():void {
+				var chosen:Project = this.projectList.selectedItem as Project;
+				
+				this.currentlyLoadedProject = chosen;
+				reset();
+			}
+			
+			protected function reset():void {
+				if(currentlyLoadedProject == null) {
+					this.projectName.text = '';
+					this.description.text = '';
+					this.language.selectedIndex = -1;
+					this.projectHost.selectedIndex = -1;
+					this.summary.text = '';
+				} else {
+					this.projectName.text = this.currentlyLoadedProject.name;
+					this.description.text = this.currentlyLoadedProject.description;
+					this.language.selectedIndex = -1;
+					this.projectHost.selectedIndex = -1;
+					this.summary.text = this.currentlyLoadedProject.summary;
+				}
 			}
 			
 			protected function saveProject():void {
-				var project:Project = null;
-				
-				if(currentlyLoadedProject == null) {
-					project = new Project();
+				if(this.currentlyLoadedProject == null) {
+					this.saveProjectFromFormData(new Project());
 				} else {
-					project = currentlyLoadedProject;
+					this.saveProjectFromFormData(this.currentlyLoadedProject);
 				}
 				
+			}
+			
+			protected function saveNewProject():void {
+				this.saveProjectFromFormData(new Project());
+			}
+			
+			private function saveProjectFromFormData(project:Project):void {
 				project.name = this.projectName.text;
 				project.description = this.description.text;
 				project.summary = this.summary.text;
 				
-				var success:Boolean = ApplicationContext.site.projectService.saveProject(project);
-				if(success) {
-					currentlyLoadedProject = project;
-				}
+				var rowID:Number = ApplicationContext.site.projectService.saveProject(project);
+				project.projectID = rowID;
+				this.currentlyLoadedProject = project;
+
+				loadAllProjects();
+			}
+			
+			protected function deleteProject():void {
+				var chosen:Project = this.projectList.selectedItem as Project;
+				ApplicationContext.site.projectService.deleteProject(chosen.projectID);
+				
+				this.currentlyLoadedProject = null;
+				
+				loadAllProjects();
 			}
 		]]>
 	</fx:Script>
 	
-	<s:VGroup height="100%" width="200">
-		<s:List width="100%" height="100%" id="projectList" labelField="name" />
+	<s:HGroup height="100%" width="100%">
+		<s:VGroup width="250" height="100%">
+			<s:Label text="Available Projects" />
+			<s:List width="100%" height="100%" id="projectList" labelField="name" dataProvider="{this.projects}" />
+		</s:VGroup>
 		
-		<s:Button label="Load" />
-	</s:VGroup>
-	
-	<s:VGroup width="100%" height="100%">
-		<s:Label text="Name" />
-		<s:TextInput width="100%" id="projectName" />
-		
-		<s:Spacer height="20" />
-		
-		<s:Label text="Description" id="description" />
-		<s:TextInput width="100%" />
-		
-		<s:Spacer height="20" />
-		
-		<s:Label text="Language" />
-		<s:ComboBox width="100%" id="language" />
-		
-		<s:Spacer height="20" />
-		
-		<s:Label text="Host" />
-		<s:ComboBox width="100%" id="projectHost" />
-		
-		<s:Spacer height="20" />
-		
-		<s:Label text="Summary" />
-		<s:TextArea width="100%" height="100%" id="summary" />
-		
-		<s:HGroup width="100%" >
-			<s:Spacer width="100%" />
+		<s:VGroup width="100%" height="100%">
+			<s:Label text="Name" />
+			<s:TextInput width="100%" id="projectName" />
 			
-			<s:Button label="Save" click="saveProject();" />
-			<s:Button label="Save As" />
-			<s:Button label="Cancel/Reset" />
-		</s:HGroup>
-		
-	</s:VGroup>
+			<s:Spacer height="20" />
+			
+			<s:Label text="Description" />
+			<s:TextInput width="100%" id="description" />
+			
+			<s:Spacer height="20" />
+			
+			<s:Label text="Language" />
+			<s:ComboBox width="100%" id="language" />
+			
+			<s:Spacer height="20" />
+			
+			<s:Label text="Host" />
+			<s:ComboBox width="100%" id="projectHost" />
+			
+			<s:Spacer height="20" />
+			
+			<s:Label text="Summary" />
+			<s:TextArea width="100%" height="100%" id="summary" />
+		</s:VGroup>
+	</s:HGroup>
 	
+	<s:HGroup width="100%" >
+		<s:Button label="Load" click="loadProject()" enabled="{this.projectList.selectedIndex != -1}" />
+		<s:Button label="Delete" click="deleteProject()" enabled="{this.projectList.selectedIndex != -1}" />
+		
+		<s:Spacer width="100%" />
+		
+		<s:Button label="Save" click="saveProject();" />
+		<s:Button label="Save As" click="saveNewProject();" />
+		<s:Button label="Cancel/Reset" click="reset()" />
+	</s:HGroup>
 </s:NavigatorContent>
