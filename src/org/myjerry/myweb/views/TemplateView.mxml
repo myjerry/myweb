@@ -96,16 +96,18 @@
 			<s:List width="100%" height="100%" id="templateList"  labelField="name" dataProvider="{this.templates}" />
 		</s:VGroup>
 		
-		<s:VGroup width="100%" height="100%">
-			<s:Label text="Name" />
-			<s:TextInput width="100%" id="templateName" />
+		<s:Form width="100%" height="100%">
+			<s:FormHeading label="Template Details" />
 			
-			<s:Spacer height="20" />
+			<s:FormItem label="Name" >
+				<s:TextInput width="100%" id="templateName" />
+			</s:FormItem>
 			
-			<s:Label text="Code" />
-			<s:TextArea width="100%" height="100%" id="templateCode" />
-			
-		</s:VGroup>
+			<s:FormItem label="Code" height="100%">
+				<s:TextArea width="100%" height="100%" id="templateCode" />
+			</s:FormItem>
+		</s:Form>
+		
 	</s:HGroup>
 	
 	<s:HGroup width="100%" >

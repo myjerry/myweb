@@ -104,30 +104,30 @@
 			<s:List width="100%" height="100%" id="projectList" labelField="name" dataProvider="{this.projects}" />
 		</s:VGroup>
 		
-		<s:VGroup width="100%" height="100%">
-			<s:Label text="Name" />
-			<s:TextInput width="100%" id="projectName" />
+		<s:Form width="100%" height="100%" id="projectsForm">
+			<s:FormHeading label="Project Details" />
 			
-			<s:Spacer height="20" />
+			<s:FormItem label="Name" >
+				<s:TextInput width="100%" id="projectName" />
+			</s:FormItem>
 			
-			<s:Label text="Description" />
-			<s:TextInput width="100%" id="description" />
+			<s:FormItem label="Description" >
+				<s:TextInput width="100%" id="description" />
+			</s:FormItem>
 			
-			<s:Spacer height="20" />
+			<s:FormItem label="Language" >
+				<s:ComboBox width="100%" id="language" />
+			</s:FormItem>
 			
-			<s:Label text="Language" />
-			<s:ComboBox width="100%" id="language" />
+			<s:FormItem label="Host" >
+				<s:ComboBox width="100%" id="projectHost" />
+			</s:FormItem>
 			
-			<s:Spacer height="20" />
-			
-			<s:Label text="Host" />
-			<s:ComboBox width="100%" id="projectHost" />
-			
-			<s:Spacer height="20" />
-			
-			<s:Label text="Summary" />
-			<s:TextArea width="100%" height="100%" id="summary" />
-		</s:VGroup>
+			<s:FormItem label="Summary" >
+				<s:TextArea width="100%" height="100%" id="summary" />
+			</s:FormItem>
+		</s:Form>
+		
 	</s:HGroup>
 	
 	<s:HGroup width="100%" >

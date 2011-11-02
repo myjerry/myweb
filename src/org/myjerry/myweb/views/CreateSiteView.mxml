@@ -60,7 +60,7 @@
 	</fx:Script>
 	
 	<s:HGroup width="100%">
-		<s:Label text="Project Name" />
+		<s:Label text="Site Name" />
 		<s:TextInput id="projectName" />
 	</s:HGroup>
 	

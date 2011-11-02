@@ -4,7 +4,27 @@
 					xmlns:mx="library://ns.adobe.com/flex/mx" 
 					width="100%" height="100%"
 					label="Site Details">
+	<fx:Script>
+		<![CDATA[
+			import org.myjerry.myweb.ApplicationContext;
+		]]>
+	</fx:Script>
+	
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
+	
+	<s:Form id="siteDetailsForm">
+		<s:FormHeading label="Site Details" />
+		
+		<s:FormItem label="Site Title" required="true" >
+			<s:TextInput id="siteTitle" />
+		</s:FormItem>
+		
+		<s:FormItem label="Site Wide Template" required="true" >
+			<s:ComboBox />
+		</s:FormItem>
+		
+	</s:Form>
+	
 </s:NavigatorContent>
