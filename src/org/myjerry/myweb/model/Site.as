@@ -10,6 +10,8 @@ package org.myjerry.myweb.model {
 	import org.myjerry.as3utils.StringUtils;
 	import org.myjerry.myweb.ApplicationContext;
 	import org.myjerry.myweb.db.SiteDB;
+	import org.myjerry.myweb.service.LanguageService;
+	import org.myjerry.myweb.service.PageService;
 	import org.myjerry.myweb.service.ProjectService;
 	import org.myjerry.myweb.service.TemplateService;
 
@@ -25,12 +27,18 @@ package org.myjerry.myweb.model {
 		
 		protected var _templateService:TemplateService = null;
 		
+		protected var _languageService:LanguageService = null;
+		
+		protected var _pageService:PageService = null;
+		
 		public function Site(siteFile:File) {
 			this.siteFile = siteFile;
 			this.database = new SiteDB(this.siteFile);
 			
 			this._projectService = new ProjectService(this.database);
 			this._templateService = new TemplateService(this.database);
+			this._languageService = new LanguageService(this.database);
+			this._pageService = new PageService(this.database);
 		}
 		
 		public function get projectService():ProjectService {
@@ -39,6 +47,14 @@ package org.myjerry.myweb.model {
 		
 		public function get templateService():TemplateService {
 			return this._templateService;
+		}
+		
+		public function get languageService():LanguageService {
+			return this._languageService;
+		}
+		
+		public function get pageService():PageService {
+			return this._pageService;
 		}
 		
 		public static function createNewSite(siteName:String, projectFolder:String):void {

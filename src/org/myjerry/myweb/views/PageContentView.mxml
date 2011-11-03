@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 width="100%" height="100%">
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import org.myjerry.myweb.ApplicationContext;
+			
+			protected function goBack():void {
+				ApplicationContext.popView();
+			}
+			
+			protected function previewPage():void {
+				
+			}
+			
+			protected function savePageContent():void {
+				
+			}
+			
+			protected function reset():void {
+				
+			}
+		]]>
+	</fx:Script>
+	
+	<s:layout>
+		<s:VerticalLayout/>
+	</s:layout>
+	
+	<s:Form width="100%" height="100%">
+		<s:FormHeading label="Page Content" />
+		
+		<s:FormItem label="Page Title" >
+			<s:TextInput id="pageTitle" enabled="false" />
+		</s:FormItem>
+
+		<s:FormItem label="Content">
+			<s:TextArea id="pageContent" width="100%" height="100%" />
+		</s:FormItem>
+	</s:Form>
+	
+	<s:HGroup width="100%">
+		<s:Spacer width="100%" />
+		
+		<s:Button label="Preview" click="previewPage()" />
+		
+		<s:Button label="Save" click="savePageContent()" />
+		
+		<s:Button label="Reset" click="reset()" />
+		
+		<s:Button label="Back" click="goBack()" />
+	</s:HGroup>
+	
+</s:Group>

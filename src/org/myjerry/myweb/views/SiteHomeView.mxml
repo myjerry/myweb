@@ -38,6 +38,8 @@
 		
 		<views:AnalyticsView />
 		
+		<views:LanguagesView />
+		
 	</mx:ViewStack>
 	
 	<s:Spacer height="20" />

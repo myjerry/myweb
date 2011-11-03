@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="100%" height="100%">
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import org.myjerry.myweb.ApplicationContext;
+			
+			protected function editPageContent():void {
+				ApplicationContext.pushView(new PageContentView());
+			}
+			
+			protected function goBack():void {
+				ApplicationContext.popView();
+			}
+			
+			protected function reset():void {
+				
+			}
+			
+			protected function savePageDetails():void {
+				
+			}
+		]]>
+	</fx:Script>
+	
+	<s:layout>
+		<s:VerticalLayout/>
+	</s:layout>
+	
+	<s:Form width="100%" height="100%">
+		<s:FormHeading label="Page Details" />
+		
+		<s:FormItem label="Page Title">
+			<s:TextInput id="pageTitle" />
+		</s:FormItem>
+		
+		<s:FormItem label="Path">
+			<s:TextInput id="pagePath" />
+		</s:FormItem>
+		
+		<s:FormItem label="Template to use" >
+			<s:ComboBox id="templates" />
+		</s:FormItem>
+		
+		<s:FormItem label="Searchable" >
+			<s:CheckBox id="searchable" />
+		</s:FormItem>
+		
+	</s:Form>
+	
+	<s:HGroup width="100%">
+		<s:Spacer width="100%" />
+		
+		<s:Button label="Edit Content" click="editPageContent()" />
+		
+		<s:Button label="Save" click="savePageDetails()" />
+		
+		<s:Button label="Reset" click="reset()" />
+		
+		<s:Button label="Back" click="goBack()" />
+	</s:HGroup>
+	
+</s:Group>
