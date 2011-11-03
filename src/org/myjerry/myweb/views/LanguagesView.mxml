@@ -11,49 +11,105 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import mx.collections.ArrayList;
+			
 			import org.myjerry.myweb.ApplicationContext;
 			import org.myjerry.myweb.model.Language;
 			
+			protected var current:Language = null;
+			
+			protected const languages:ArrayList = new ArrayList();
+			
+			override protected function initializationComplete():void {
+				super.initializationComplete();
+				
+				loadAllLanguages();
+			}
+			
+			protected function loadAllLanguages():void {
+				var temp:ArrayList = ApplicationContext.site.languageService.getAllLanguages();
+				languages.removeAll();
+				languages.addAll(temp);
+			}
+			
 			protected function saveLanguage():void {
-				var lang:Language = new Language();
+				if(current != null) {
+					saveLanguageFromFormData(current);
+				} else {
+					saveLanguageFromFormData(new Language());
+				}
+			}
+			
+			private function saveLanguageFromFormData(language:Language):void {
+				language.name = this.langName.text;
+				language.extensions = this.extensions.text;
 				
-				lang.name = this.langName.text;
-				lang.extensions = this.extensions.text;
+				var rowID:uint = ApplicationContext.site.languageService.saveLanguage(language);
+				language.languageID = rowID;
+				this.current = language;
 				
-				ApplicationContext.site.languageService.saveLanguage(lang);
+				loadAllLanguages();
+			}
+			
+			protected function openLanguage():void {
+				var chosen:Language = this.langList.selectedItem as Language;
+				this.current = chosen;
+				reset();
+			}
+			
+			private function reset():void {
+				if(current != null) {
+					this.langName.text = current.name;
+					this.extensions.text = current.extensions;
+				} else {
+					this.langName.text = '';
+					this.extensions.text = '';
+				}
+			}
+			
+			protected function saveNewLanguage():void {
+				saveLanguageFromFormData(new Language());
+			}
+			
+			protected function deleteLanguage():void {
+				var chosen:Language = this.langList.selectedItem as Language;
+				ApplicationContext.site.languageService.deleteLanguage(chosen.languageID);
+				
+				current = null;
+				loadAllLanguages();
 			}
 		]]>
 	</fx:Script>
 	
 	<s:layout>
-		<s:HorizontalLayout />
+		<s:VerticalLayout />
 	</s:layout>
 	
-	<s:List id="langList" width="100%" height="100%">
+	<s:HGroup width="100%" height="100%">
+		<s:List id="langList" width="250" height="100%" dataProvider="{this.languages}" labelField="name" />
 		
-	</s:List>
+		<s:Form id="languageForm" width="100%">
+			<s:FormHeading label="Language Details" />
+			
+			<s:FormItem label="Name">
+				<s:TextInput id="langName" />
+			</s:FormItem>
+			
+			<s:FormItem label="Source Extensions">
+				<s:TextInput id="extensions" />
+			</s:FormItem>
+		</s:Form>
+	</s:HGroup>
 	
-	<s:Form id="languageForm" width="100%">
-		<s:FormHeading label="Language Details" />
-		
-		<s:FormItem label="Name">
-			<s:TextInput id="langName" />
-		</s:FormItem>
-		
-		<s:FormItem label="Source Extensions">
-			<s:TextInput id="extensions" />
-		</s:FormItem>
-	</s:Form>
-	
-	<s:HGroup width="100%" height="100%" >
-		<s:Button label="Load" />
-		<s:Button label="Delete" />
+	<s:HGroup width="100%" >
+		<s:Button label="Load" click="openLanguage()" enabled="{this.langList.selectedIndex != -1}" />
+		<s:Button label="Delete" click="deleteLanguage()" enabled="{this.langList.selectedIndex != -1}" />
 		
 		<s:Spacer width="100%" />
 		
 		<s:Button label="Save" click="saveLanguage()" />
-		<s:Button label="Save As" />
-		<s:Button label="Reset" />
+		<s:Button label="Save As" click="saveNewLanguage()" />
+		<s:Button label="Reset" click="reset()" />
 	</s:HGroup>
 	
 </s:NavigatorContent>

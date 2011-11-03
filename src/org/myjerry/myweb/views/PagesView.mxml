@@ -24,6 +24,10 @@
 				loadAllPages();
 			}
 			
+			protected function refresh():void {
+				loadAllPages();
+			}
+			
 			protected function loadAllPages():void {
 				var temp:ArrayList = ApplicationContext.site.pageService.getAllPages();
 				pages.removeAll();
@@ -49,6 +53,14 @@
 			protected function editPageContent():void {
 				
 			}
+			
+			public function getPageLabel(item:Object):String {
+				if(item is Page) {
+					return (item as Page).path;
+				}
+				
+				return String(item);
+			}
 		]]>
 	</fx:Script>
 	
@@ -56,10 +68,12 @@
 		<s:VerticalLayout />
 	</s:layout>
 	
-	<s:List width="100%" height="100%" id="pageList" dataProvider="{this.pages}" labelField="path" />
+	<s:List width="100%" height="100%" id="pageList" dataProvider="{this.pages}" labelFunction="getPageLabel" />
 	
 	<s:HGroup width="100%">
 		<s:Spacer width="100%" />
+		
+		<s:Button label="Refresh" click="refresh()" />
 		
 		<s:Button label="New Page" click="newPage()" />
 		

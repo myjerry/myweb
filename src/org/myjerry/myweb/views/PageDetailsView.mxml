@@ -36,6 +36,14 @@
 				
 				ApplicationContext.site.pageService.savePage(page);
 			}
+			
+			protected function publishPage():void {
+				
+			}
+			
+			protected function makePageDraft():void {
+				
+			}
 		]]>
 	</fx:Script>
 	
@@ -62,6 +70,10 @@
 			<s:CheckBox id="searchable" />
 		</s:FormItem>
 		
+		<s:FormItem label="Draft" >
+			<s:CheckBox id="draftPage" enabled="false" />
+		</s:FormItem>
+		
 	</s:Form>
 	
 	<s:HGroup width="100%">
@@ -70,6 +82,10 @@
 		<s:Button label="Edit Content" click="editPageContent()" />
 		
 		<s:Button label="Save" click="savePageDetails()" />
+		
+		<s:Button label="Publish" click="publishPage()" />
+		
+		<s:Button label="Make Draft" click="makePageDraft()" />
 		
 		<s:Button label="Reset" click="reset()" />
 		
