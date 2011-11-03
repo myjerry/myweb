@@ -31,7 +31,7 @@
 			}
 			
 			protected function loadAllTemplates():void {
-				var temp:ArrayList = ApplicationContext.site.templateService.getTemplates();
+				var temp:ArrayList = ApplicationContext.templateService.getTemplates();
 				templates.removeAll();
 				templates.addAll(temp);
 				
@@ -66,7 +66,7 @@
 				template.name = this.templateName.text;
 				template.code = this.templateCode.text;
 				
-				var rowID:Number = ApplicationContext.site.templateService.saveTemplate(template);
+				var rowID:Number = ApplicationContext.templateService.saveTemplate(template);
 				template.templateID = rowID;
 				this.currentlyLoadedTemplate = template;
 				
@@ -81,7 +81,7 @@
 			
 			protected function deleteChosenTemplate():void {
 				var chosen:Template = this.templateList.selectedItem as Template;
-				ApplicationContext.site.templateService.deleteTemplate(chosen.templateID);
+				ApplicationContext.templateService.deleteTemplate(chosen.templateID);
 
 				this.currentlyLoadedTemplate = null;
 				

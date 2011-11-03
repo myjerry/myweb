@@ -23,38 +23,11 @@ package org.myjerry.myweb.model {
 		
 		protected var database:SiteDB = null;
 		
-		protected var _projectService:ProjectService = null;
-		
-		protected var _templateService:TemplateService = null;
-		
-		protected var _languageService:LanguageService = null;
-		
-		protected var _pageService:PageService = null;
-		
 		public function Site(siteFile:File) {
 			this.siteFile = siteFile;
 			this.database = new SiteDB(this.siteFile);
-			
-			this._projectService = new ProjectService(this.database);
-			this._templateService = new TemplateService(this.database);
-			this._languageService = new LanguageService(this.database);
-			this._pageService = new PageService(this.database);
-		}
-		
-		public function get projectService():ProjectService {
-			return this._projectService;
-		}
-		
-		public function get templateService():TemplateService {
-			return this._templateService;
-		}
-		
-		public function get languageService():LanguageService {
-			return this._languageService;
-		}
-		
-		public function get pageService():PageService {
-			return this._pageService;
+
+			ApplicationContext.initializeServices(this.database);
 		}
 		
 		public static function createNewSite(siteName:String, projectFolder:String):void {

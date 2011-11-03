@@ -29,7 +29,7 @@
 			}
 			
 			protected function loadAllPages():void {
-				var temp:ArrayList = ApplicationContext.site.pageService.getAllPages();
+				var temp:ArrayList = ApplicationContext.pageService.getAllPages();
 				pages.removeAll();
 				pages.addAll(temp);
 			}

@@ -34,7 +34,7 @@
 				page.title = this.pageTitle.text;
 				page.path = this.pagePath.text;
 				
-				ApplicationContext.site.pageService.savePage(page);
+				ApplicationContext.pageService.savePage(page);
 			}
 			
 			protected function publishPage():void {

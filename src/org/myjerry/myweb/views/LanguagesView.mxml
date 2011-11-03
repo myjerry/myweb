@@ -27,7 +27,7 @@
 			}
 			
 			protected function loadAllLanguages():void {
-				var temp:ArrayList = ApplicationContext.site.languageService.getAllLanguages();
+				var temp:ArrayList = ApplicationContext.languageService.getAllLanguages();
 				languages.removeAll();
 				languages.addAll(temp);
 			}
@@ -44,7 +44,7 @@
 				language.name = this.langName.text;
 				language.extensions = this.extensions.text;
 				
-				var rowID:uint = ApplicationContext.site.languageService.saveLanguage(language);
+				var rowID:uint = ApplicationContext.languageService.saveLanguage(language);
 				language.languageID = rowID;
 				this.current = language;
 				
@@ -73,7 +73,7 @@
 			
 			protected function deleteLanguage():void {
 				var chosen:Language = this.langList.selectedItem as Language;
-				ApplicationContext.site.languageService.deleteLanguage(chosen.languageID);
+				ApplicationContext.languageService.deleteLanguage(chosen.languageID);
 				
 				current = null;
 				loadAllLanguages();
