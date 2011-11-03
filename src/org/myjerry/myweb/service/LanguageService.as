@@ -1,18 +1,18 @@
 package org.myjerry.myweb.service {
 	
-	import org.myjerry.as3extensions.db.Database;
+	import org.myjerry.myweb.db.SiteDB;
 	import org.myjerry.myweb.model.Language;
 	
 	public class LanguageService {
 		
-		protected var database:Database = null;
+		protected var database:SiteDB = null;
 		
-		public function LanguageService(db:Database) {
+		public function LanguageService(db:SiteDB) {
 			this.database = db;
 		}
 		
 		public function saveLanguage(language:Language):void {
-			
+			this.database.save(language);
 		}
 	}
 }

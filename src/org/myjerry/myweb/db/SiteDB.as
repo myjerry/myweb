@@ -2,9 +2,9 @@ package org.myjerry.myweb.db {
 	
 	import flash.filesystem.File;
 	
-	import org.myjerry.as3extensions.db.Database;
+	import org.myjerry.as3extensions.db.ORMDatabase;
 	
-	public class SiteDB extends Database {
+	public class SiteDB extends ORMDatabase {
 		
 		protected var dbFile:File = null;
 		
@@ -38,5 +38,6 @@ package org.myjerry.myweb.db {
 				")";
 			executeSQLQuery(query);
 		}
+		
 	}
 }

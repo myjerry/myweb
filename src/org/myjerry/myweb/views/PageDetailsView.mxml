@@ -10,6 +10,7 @@
 	<fx:Script>
 		<![CDATA[
 			import org.myjerry.myweb.ApplicationContext;
+			import org.myjerry.myweb.model.Page;
 			
 			protected function editPageContent():void {
 				ApplicationContext.pushView(new PageContentView());
@@ -23,8 +24,17 @@
 				
 			}
 			
+			public function showPage(page:Page):void {
+				this.pageTitle.text = page.title;
+				this.pagePath.text = page.path;
+			}
+			
 			protected function savePageDetails():void {
+				var page:Page = new Page();
+				page.title = this.pageTitle.text;
+				page.path = this.pagePath.text;
 				
+				ApplicationContext.site.pageService.savePage(page);
 			}
 		]]>
 	</fx:Script>

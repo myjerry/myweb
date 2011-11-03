@@ -14,6 +14,7 @@
 			import mx.collections.ArrayList;
 			
 			import org.myjerry.myweb.ApplicationContext;
+			import org.myjerry.myweb.model.Page;
 			
 			protected const pages:ArrayList = new ArrayList();
 			
@@ -30,7 +31,11 @@
 			}
 			
 			protected function editPage():void {
+				var page:Page = this.pageList.selectedItem as Page;
 				
+				var view:PageDetailsView = new PageDetailsView();
+				ApplicationContext.pushView(view);
+				view.showPage(page);
 			}
 			
 			protected function clonePage():void {
@@ -51,18 +56,18 @@
 		<s:VerticalLayout />
 	</s:layout>
 	
-	<s:List width="100%" height="100%" id="pageList" dataProvider="{this.pages}" />
+	<s:List width="100%" height="100%" id="pageList" dataProvider="{this.pages}" labelField="path" />
 	
 	<s:HGroup width="100%">
 		<s:Spacer width="100%" />
 		
 		<s:Button label="New Page" click="newPage()" />
 		
-		<s:Button label="Edit Details" click="editPage()" />
+		<s:Button label="Edit Details" click="editPage()" enabled="{this.pageList.selectedIndex != -1}" />
 		
-		<s:Button label="Edit Content" click="editPageContent()" />
+		<s:Button label="Edit Content" click="editPageContent()" enabled="{this.pageList.selectedIndex != -1}" />
 		
-		<s:Button label="Clone" click="clonePage()" />
+		<s:Button label="Clone" click="clonePage()" enabled="{this.pageList.selectedIndex != -1}" />
 	</s:HGroup>
 	
 </s:NavigatorContent>

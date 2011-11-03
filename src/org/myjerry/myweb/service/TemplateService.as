@@ -5,70 +5,29 @@ package org.myjerry.myweb.service {
 	
 	import mx.collections.ArrayList;
 	
-	import org.myjerry.as3extensions.db.Database;
+	import org.myjerry.myweb.db.SiteDB;
 	import org.myjerry.myweb.model.Template;
 
 	public class TemplateService {
 		
-		protected var database:Database = null;
+		protected var database:SiteDB = null;
 		
-		public function TemplateService(db:Database) {
+		public function TemplateService(db:SiteDB) {
 			this.database = db;
 		}
 		
 		public function deleteTemplate(templateID:uint):Boolean {
-			var statement:SQLStatement = this.database.getStatement("DELETE FROM templates WHERE id = :id");
-			statement.parameters[":id"] = templateID;
-			
-			statement.execute();
-			
-			var result:SQLResult = statement.getResult();
-			if(result.rowsAffected == 1) {
-				return true;
-			}
-			
-			return false;
+			this.database.removeID(Template as Class, templateID);
+			return true;
 		}
 		
 		public function saveTemplate(template:Template):Number {
-			var statement:SQLStatement;
-			
-			if(template.templateID == 0) {
-				statement = this.database.getStatement("INSERT INTO templates (name, code) VALUES (:name, :code)");
-			} else {
-				statement = this.database.getStatement("UPDATE templates SET name = :name, code = :code WHERE id = :id");
-				statement.parameters[":id"] = template.templateID;
-			}
-			
-			statement.parameters[":name"] = template.name;
-			statement.parameters[":code"] = template.code;
-			
-			statement.execute();
-			
-			var result:SQLResult = statement.getResult();
-			return result.lastInsertRowID;
+			this.database.save(template);
+			return template.templateID;
 		}
 		
 		public function getTemplates():ArrayList {
-			var templates:ArrayList = new ArrayList();
-			
-			var statement:SQLStatement = this.database.getStatement("SELECT * FROM templates");
-			statement.execute();
-			
-			var result:SQLResult = statement.getResult();
-			if(result != null && result.data != null && result.data.length > 0) {
-				for(var index:int = 0; index < result.data.length; index++) {
-					var row:Object = result.data[index];
-					
-					var template:Template = new Template();
-					template.templateID = row.id;
-					template.name = row.name;
-					template.code = row.code;
-					
-					templates.addItem(template);
-				}
-			}
-			
+			var templates:ArrayList = this.database.findAll(Template as Class);
 			return templates;
 		}
 	}

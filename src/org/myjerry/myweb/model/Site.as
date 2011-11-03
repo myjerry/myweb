@@ -21,7 +21,7 @@ package org.myjerry.myweb.model {
 		
 		protected var siteFile:File = null;
 		
-		protected var database:Database = null;
+		protected var database:SiteDB = null;
 		
 		protected var _projectService:ProjectService = null;
 		
