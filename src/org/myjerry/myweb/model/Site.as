@@ -38,11 +38,17 @@ package org.myjerry.myweb.model {
 
 	public class Site {
 		
-		public static const SITE_FILE_EXTENSION:String = 'myweb';
+		private static const TITLE_KEY:String = 'site.title';
+		
+		private static const TEMPLATE_ID:String = 'site.template.id';
 		
 		protected var siteFile:File = null;
 		
 		protected var database:SiteDB = null;
+		
+		public var title:String;
+		
+		public var templateID:int;
 		
 		public function Site(siteFile:File) {
 			this.siteFile = siteFile;
@@ -51,31 +57,48 @@ package org.myjerry.myweb.model {
 			ApplicationContext.initializeServices(this.database);
 		}
 		
-		public static function createNewSite(siteName:String, projectFolder:String):void {
-			var dbFile:File = new File(projectFolder).resolvePath(siteName + '.' + SITE_FILE_EXTENSION);
-			if(dbFile.exists) {
-				Alert.show('Site already exists, use open site.');
-				return;
-			}
-			
-			openSite(dbFile);
-		}
-		
-		public static function openSite(siteFile:File):void {
-			if(!StringUtils.equals(siteFile.extension, SITE_FILE_EXTENSION)) {
-				Alert.show("Not a valid site file.");
-				return;
-			}
-			
-			ApplicationContext.setSite(new Site(siteFile));
-		}
-		
 		public function closeSite():void {
 			this.database.dispose();
 			this.database = null;
 			this.siteFile = null;
 			
 			ApplicationContext.popView();
+		}
+		
+		public function loadSiteDetails():void {
+			this.title = getPreference(TITLE_KEY);
+			
+			var temp:String = getPreference(TEMPLATE_ID);
+			if(temp != null) {
+				this.templateID = int(temp);
+			} else {
+				this.templateID = -1;
+			}
+		}
+		
+		public function saveSiteDetails():void {
+			// do for site title
+			saveSitePreference(TITLE_KEY, this.title);
+			saveSitePreference(TEMPLATE_ID, String(this.templateID));
+		}
+		
+		private function saveSitePreference(key:String, value:String):void {
+			var pref:SitePreference = ApplicationContext.siteService.getPreference(key);
+			if(pref == null) {
+				pref = new SitePreference(key, value);
+			} else {
+				pref.value = value;
+			}
+			this.database.save(pref);
+		}
+		
+		private function getPreference(key:String):String {
+			var pref:SitePreference = ApplicationContext.siteService.getPreference(key);
+			if(pref != null) {
+				return pref.value;
+			}
+			
+			return '';
 		}
 	}
 }

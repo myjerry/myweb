@@ -17,6 +17,10 @@
 			protected function closeSite():void {
 				ApplicationContext.site.closeSite();
 			}
+			
+			protected function generateSite():void {
+				ApplicationContext.pushView(new GenerateSiteView());
+			}
 		]]>
 	</fx:Script>
 	
@@ -47,7 +51,7 @@
 	<s:HGroup width="100%">
 		<s:Spacer width="100%" />
 		
-		<s:Button label="Generate Site" />
+		<s:Button label="Generate Site" click="generateSite()" />
 		
 		<s:Button label="Close Site" click="closeSite();" />
 	</s:HGroup>

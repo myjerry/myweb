@@ -6,11 +6,9 @@
 	
 	<fx:Script>
 		<![CDATA[
-			import mx.core.FlexGlobals;
-			
 			import org.myjerry.as3extensions.io.FileChooser;
 			import org.myjerry.myweb.ApplicationContext;
-			import org.myjerry.myweb.model.Site;
+			import org.myjerry.myweb.service.SiteService;
 			
 			private function createNewSite():void {
 				ApplicationContext.pushView(new CreateSiteView());
@@ -21,7 +19,7 @@
 			}
 			
 			private function fileChosen(file:File):void {
-				Site.openSite(file);
+				SiteService.openSite(file);
 			}
 		]]>
 	</fx:Script>

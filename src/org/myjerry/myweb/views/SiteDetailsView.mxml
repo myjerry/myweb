@@ -7,6 +7,29 @@
 	<fx:Script>
 		<![CDATA[
 			import org.myjerry.myweb.ApplicationContext;
+			
+			[Bindable]
+			private var myTitle:String = '';
+			
+			[Bindable]
+			private var selectedIndex:int = -1;
+			
+			protected function saveDetails():void {
+				ApplicationContext.site.title = this.siteTitle.text;
+				ApplicationContext.site.templateID = this.templates.selectedIndex;
+				
+				ApplicationContext.site.saveSiteDetails();
+			}
+			
+			override protected function initializationComplete():void {
+				super.initializationComplete();
+				
+				ApplicationContext.site.loadSiteDetails();
+				
+				this.myTitle = ApplicationContext.site.title;
+				var id:int = ApplicationContext.site.templateID;
+				this.selectedIndex = id;				
+			}
 		]]>
 	</fx:Script>
 	
@@ -14,17 +37,27 @@
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	
+	<s:layout>
+		<s:VerticalLayout />
+	</s:layout>
+	
 	<s:Form id="siteDetailsForm">
 		<s:FormHeading label="Site Details" />
 		
 		<s:FormItem label="Site Title" required="true" >
-			<s:TextInput id="siteTitle" />
+			<s:TextInput id="siteTitle" text="{this.myTitle}" />
 		</s:FormItem>
 		
 		<s:FormItem label="Site Wide Template" required="true" >
-			<s:ComboBox />
+			<s:ComboBox id="templates" selectedIndex="{this.selectedIndex}" />
 		</s:FormItem>
 		
 	</s:Form>
+	
+	<s:HGroup width="100%" height="100%">
+		<s:Spacer width="100%" />
+		
+		<s:Button label="Save" click="saveDetails()" />
+	</s:HGroup>
 	
 </s:NavigatorContent>

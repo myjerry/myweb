@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="100%" height="100%">
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			
+			import org.myjerry.as3extensions.io.FolderChooser;
+			import org.myjerry.as3utils.AssertUtils;
+			import org.myjerry.as3utils.StringUtils;
+			import org.myjerry.myweb.ApplicationContext;
+			import org.myjerry.myweb.generate.SiteGenerator;
+			
+			protected function browseForFolder():void {
+				new FolderChooser('Choose the folder to create project in...', folderChosen).choose();
+			}
+			
+			protected function folderChosen(folder:File):void {
+				this.folder.text = folder.nativePath;
+			}
+			
+			protected function goBack():void {
+				ApplicationContext.popView();
+			}
+			
+			protected function generateSite():void {
+				var folderPath:String = this.folder.text;
+				
+				var folder:File = new File(folderPath);
+				if(folder.exists && folder.isDirectory) {
+					Alert.show('Folder exists but is not a directory... exiting!');
+					return;
+				}
+				
+				if(!folder.exists) {
+					folder.createDirectory();
+				}
+				
+				var generator:SiteGenerator = new SiteGenerator(folder);
+				
+			}
+			
+			protected function onCheckBoxChange():void {
+				if(this.desktopDirectory.selected) {
+					if(AssertUtils.isNotEmptyString(this.folder.text)) { 
+						this.folder.text = File.desktopDirectory.nativePath + File.separator + this.folder.text;
+					} else {
+						this.folder.text = File.desktopDirectory.nativePath;
+					}
+				}
+			}
+		]]>
+	</fx:Script>
+
+	<s:layout>
+		<s:VerticalLayout/>
+	</s:layout>
+	
+	<s:CheckBox label="Create folder on desktop" id="desktopDirectory" change="onCheckBoxChange()"/>
+
+	<s:HGroup width="100%">
+		<s:Label text="Folder:" />
+		<s:TextInput id="folder" width="100%" />
+		<s:Button label="Browse..." click="browseForFolder();" />
+	</s:HGroup>
+	
+	<s:HGroup width="100%">
+		<s:Spacer width="100%" />
+		
+		<s:Button label="Generate" click="generateSite()" />
+		
+		<s:Button label="Go Back" click="goBack()" />
+	</s:HGroup>
+</s:Group>

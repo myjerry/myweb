@@ -17,9 +17,8 @@
 			
 			import org.myjerry.as3extensions.io.FolderChooser;
 			import org.myjerry.as3utils.AssertUtils;
-			import org.myjerry.as3utils.StringUtils;
 			import org.myjerry.myweb.ApplicationContext;
-			import org.myjerry.myweb.model.Site;
+			import org.myjerry.myweb.service.SiteService;
 			
 			protected function cancelProjectCreation():void {
 				ApplicationContext.popView();
@@ -36,7 +35,7 @@
 					return;
 				}
 				
-				Site.createNewSite(this.projectName.text, this.folder.text);
+				SiteService.createNewSite(this.projectName.text, this.folder.text);
 				ApplicationContext.removeView(this);
 			}
 			
