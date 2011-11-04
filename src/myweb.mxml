@@ -11,6 +11,8 @@
 			
 			protected function onInit():void {
 				this.myViewStack.push(new HomePageView());
+				
+				this.statusText.text = "Version 0.1";
 			}
 		]]>
 	</fx:Script>
