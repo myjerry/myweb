@@ -45,6 +45,8 @@ package org.myjerry.myweb.model {
 		
 		public static const GOOGLE_ANALYTICS:String = 'google.analytics'; 
 		
+		public static const CREATION_DATE:String = 'site.created.on';
+		
 		protected var siteFile:File = null;
 		
 		protected var database:SiteDB = null;

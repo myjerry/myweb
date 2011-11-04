@@ -46,10 +46,11 @@ package org.myjerry.myweb.db {
 			var query:String;
 			
 			query = "CREATE TABLE IF NOT EXISTS projects (" +
-				"    id       		INTEGER PRIMARY KEY AUTOINCREMENT," +
-				"    name      		TEXT NOT NULL," +
-				"    description    TEXT," +
-				"	 summary		TEXT" +
+				"   id       		INTEGER PRIMARY KEY AUTOINCREMENT," +
+				"   name      		TEXT NOT NULL," +
+				"   description		TEXT," +
+				"	summary			TEXT," +
+				"	deprecated		BOOLEAN" +
 				")";
 			executeSQLQuery(query);
 			

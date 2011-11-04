@@ -101,11 +101,19 @@ package org.myjerry.myweb.generate {
 		private function getSiteModel():DataModel {
 			var model:DataModel = new DataModel();
 
+			// add generic properties
+			model.putValue('today', new Date());
+			
 			// add myweb properties
 			model.putValue('mywebVersion', ApplicationContext.VERSION);
 			
 			// set the site properties
 			model.putValue('siteTitle', site.title);
+
+			var t:Number = Number(this.site.getSitePreference(Site.CREATION_DATE));
+			var date:Date = new Date();
+			date.time = t;
+			model.putValue('siteCreated', date);
 			
 			return model;
 		}

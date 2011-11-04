@@ -58,7 +58,9 @@ package org.myjerry.myweb.service {
 				return;
 			}
 			
-			ApplicationContext.setSite(new Site(siteFile));
+			var site:Site = new Site(siteFile);
+			site.saveSitePreference(Site.CREATION_DATE, String(new Date().time));
+			ApplicationContext.setSite(site);
 		}
 		
 		public function savePreference(sitePreference:SitePreference):uint {

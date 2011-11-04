@@ -37,6 +37,9 @@ package org.myjerry.myweb.model {
 		[Column(name="summary")]
 		public var summary:String;
 		
+		[Column(name="deprecated")]
+		public var deprecated:Boolean;
+		
 		public function Project() {
 		}
 	}
