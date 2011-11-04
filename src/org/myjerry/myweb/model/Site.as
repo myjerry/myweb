@@ -43,6 +43,8 @@ package org.myjerry.myweb.model {
 		
 		private static const TEMPLATE_ID:String = 'site.template.id';
 		
+		public static const GOOGLE_ANALYTICS:String = 'google.analytics'; 
+		
 		protected var siteFile:File = null;
 		
 		protected var database:SiteDB = null;
@@ -72,10 +74,10 @@ package org.myjerry.myweb.model {
 			// load the site's main properties
 			
 			// title
-			this.title = getPreference(TITLE_KEY);
+			this.title = getSitePreference(TITLE_KEY);
 			
 			// the site-wide template id
-			var temp:String = getPreference(TEMPLATE_ID);
+			var temp:String = getSitePreference(TEMPLATE_ID);
 			if(temp != null) {
 				this.templateID = int(temp);
 			} else {
@@ -94,7 +96,7 @@ package org.myjerry.myweb.model {
 			saveSitePreference(TEMPLATE_ID, String(this.templateID));
 		}
 		
-		private function saveSitePreference(key:String, value:String):void {
+		public function saveSitePreference(key:String, value:String):void {
 			var pref:SitePreference = ApplicationContext.siteService.getPreference(key);
 			if(pref == null) {
 				pref = new SitePreference(key, value);
@@ -104,7 +106,7 @@ package org.myjerry.myweb.model {
 			this.database.save(pref);
 		}
 		
-		private function getPreference(key:String):String {
+		public function getSitePreference(key:String):String {
 			var pref:SitePreference = ApplicationContext.siteService.getPreference(key);
 			if(pref != null) {
 				return pref.value;

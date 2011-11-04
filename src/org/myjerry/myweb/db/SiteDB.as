@@ -33,7 +33,7 @@ package org.myjerry.myweb.db {
 			this.dbFile = file;
 
 			// do not generate the database tables
-			super(false);
+			super(false, false);
 		}
 		
 		override public function initialize():void {
