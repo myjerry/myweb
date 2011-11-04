@@ -6,17 +6,20 @@
 					label="Site Details">
 	<fx:Script>
 		<![CDATA[
+			import mx.collections.ArrayList;
+			
 			import org.myjerry.myweb.ApplicationContext;
+			import org.myjerry.myweb.model.Template;
 			
 			[Bindable]
 			private var myTitle:String = '';
 			
 			[Bindable]
-			private var selectedIndex:int = -1;
+			private var selectedItem:Template = null;
 			
 			protected function saveDetails():void {
 				ApplicationContext.site.title = this.siteTitle.text;
-				ApplicationContext.site.templateID = this.templates.selectedIndex;
+				ApplicationContext.site.templateID = (this.templates.selectedItem as Template).templateID;
 				
 				ApplicationContext.site.saveSiteDetails();
 			}
@@ -28,7 +31,8 @@
 				
 				this.myTitle = ApplicationContext.site.title;
 				var id:int = ApplicationContext.site.templateID;
-				this.selectedIndex = id;				
+				var template:Template = ApplicationContext.templateService.getTemplate(id);
+				this.selectedItem = template;
 			}
 		]]>
 	</fx:Script>
@@ -49,7 +53,7 @@
 		</s:FormItem>
 		
 		<s:FormItem label="Site Wide Template" required="true" >
-			<s:ComboBox id="templates" selectedIndex="{this.selectedIndex}" />
+			<s:ComboBox id="templates" selectedItem="{this.selectedItem}" dataProvider="{ApplicationContext.site.siteTemplates}" labelField="name"/>
 		</s:FormItem>
 		
 	</s:Form>

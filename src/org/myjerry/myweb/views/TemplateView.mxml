@@ -22,8 +22,6 @@
 			
 			protected var currentlyLoadedTemplate:Template = null;
 			
-			protected const templates:ArrayList = new ArrayList();
-			
 			override protected function initializationComplete():void {
 				super.initializationComplete();
 				
@@ -32,8 +30,9 @@
 			
 			protected function loadAllTemplates():void {
 				var temp:ArrayList = ApplicationContext.templateService.getTemplates();
-				templates.removeAll();
-				templates.addAll(temp);
+				
+				ApplicationContext.site.siteTemplates.removeAll();
+				ApplicationContext.site.siteTemplates.addAll(temp);
 				
 				if(this.currentlyLoadedTemplate != null) {
 					this.templateList.selectedItem = this.currentlyLoadedTemplate;
@@ -93,7 +92,7 @@
 	<s:HGroup height="100%" width="100%">
 		<s:VGroup width="250" height="100%">
 			<s:Label text="Available Templates" />
-			<s:List width="100%" height="100%" id="templateList"  labelField="name" dataProvider="{this.templates}" />
+			<s:List width="100%" height="100%" id="templateList"  labelField="name" dataProvider="{ApplicationContext.site.siteTemplates}" />
 		</s:VGroup>
 		
 		<s:Form width="100%" height="100%">

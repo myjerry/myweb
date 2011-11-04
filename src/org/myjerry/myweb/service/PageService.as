@@ -59,5 +59,9 @@ package org.myjerry.myweb.service {
 			var list:ArrayList = this.database.findAll(Page as Class);
 			return list;
 		}
+		
+		public function deletePage(pageID:uint):void {
+			this.database.removeID(Page as Class, pageID);
+		}
 	}
 }

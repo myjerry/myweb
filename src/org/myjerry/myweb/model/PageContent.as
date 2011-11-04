@@ -21,10 +21,14 @@
 
 package org.myjerry.myweb.model {
 	
+	[Table(name="pageContents")]
 	public class PageContent {
 		
+		[Id]
+		[Column(name="id")]
 		public var pageID:uint;
 		
+		[Column(name="content")]
 		public var content:String;
 		
 		public function PageContent() {

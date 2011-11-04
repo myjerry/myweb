@@ -37,6 +37,10 @@ package org.myjerry.myweb.service {
 			this.database = db;
 		}
 		
+		public function getTemplate(templateID:uint):Template {
+			return this.database.find(Template as Class, templateID) as Template;
+		}
+		
 		public function deleteTemplate(templateID:uint):Boolean {
 			this.database.removeID(Template as Class, templateID);
 			return true;

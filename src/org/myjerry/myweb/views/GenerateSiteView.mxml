@@ -33,7 +33,7 @@
 				var folderPath:String = this.folder.text;
 				
 				var folder:File = new File(folderPath);
-				if(folder.exists && folder.isDirectory) {
+				if(folder.exists && !folder.isDirectory) {
 					Alert.show('Folder exists but is not a directory... exiting!');
 					return;
 				}
@@ -43,7 +43,11 @@
 				}
 				
 				var generator:SiteGenerator = new SiteGenerator(folder);
+				var time:Number = generator.generate();
 				
+				Alert.show('Site generated in ' + time + ' ms.');
+				
+				ApplicationContext.popView();
 			}
 			
 			protected function onCheckBoxChange():void {

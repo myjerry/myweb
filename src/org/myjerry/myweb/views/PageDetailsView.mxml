@@ -11,6 +11,12 @@
 		<![CDATA[
 			import org.myjerry.myweb.ApplicationContext;
 			import org.myjerry.myweb.model.Page;
+			import org.myjerry.myweb.model.Template;
+			
+			private var chosen:Page = null;
+			
+			[Bindable]
+			private var selectedItem:Template = null;
 			
 			protected function editPageContent():void {
 				ApplicationContext.pushView(new PageContentView());
@@ -25,16 +31,40 @@
 			}
 			
 			public function showPage(page:Page):void {
+				this.chosen = page;
+				
 				this.pageTitle.text = page.title;
 				this.pagePath.text = page.path;
+				this.searchable.selected = page.searchable;
+				this.draftPage.selected = page.isDraft;
+				
+				var template:Template = ApplicationContext.templateService.getTemplate(page.templateID);
+				this.selectedItem = template;
 			}
 			
 			protected function savePageDetails():void {
-				var page:Page = new Page();
+				var page:Page;
+				
+				if(this.chosen == null) {
+					page = new Page();
+				} else {
+					page = chosen;
+				}
+				
 				page.title = this.pageTitle.text;
 				page.path = this.pagePath.text;
+				page.searchable = this.searchable.selected;
+				page.isDraft = this.draftPage.selected;
+				page.templateID = (this.templates.selectedItem as Template).templateID;
 				
 				ApplicationContext.pageService.savePage(page);
+			}
+			
+			protected function deletePage():void {
+				if(chosen != null) {
+					ApplicationContext.pageService.deletePage(chosen.pageID);
+					goBack();
+				}
 			}
 			
 			protected function publishPage():void {
@@ -63,7 +93,7 @@
 		</s:FormItem>
 		
 		<s:FormItem label="Template to use" >
-			<s:ComboBox id="templates" />
+			<s:ComboBox id="templates" selectedItem="{this.selectedItem}" dataProvider="{ApplicationContext.site.siteTemplates}" labelField="name" />
 		</s:FormItem>
 		
 		<s:FormItem label="Searchable" >
@@ -88,6 +118,8 @@
 		<s:Button label="Make Draft" click="makePageDraft()" />
 		
 		<s:Button label="Reset" click="reset()" />
+		
+		<s:Button label="Delete" click="deletePage()" />
 		
 		<s:Button label="Back" click="goBack()" />
 	</s:HGroup>

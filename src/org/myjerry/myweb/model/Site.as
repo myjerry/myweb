@@ -23,6 +23,7 @@ package org.myjerry.myweb.model {
 	
 	import flash.filesystem.File;
 	
+	import mx.collections.ArrayList;
 	import mx.controls.Alert;
 	
 	import org.myjerry.as3extensions.db.Database;
@@ -50,6 +51,8 @@ package org.myjerry.myweb.model {
 		
 		public var templateID:int;
 		
+		public const siteTemplates:ArrayList = new ArrayList();
+		
 		public function Site(siteFile:File) {
 			this.siteFile = siteFile;
 			this.database = new SiteDB(this.siteFile);
@@ -66,14 +69,23 @@ package org.myjerry.myweb.model {
 		}
 		
 		public function loadSiteDetails():void {
+			// load the site's main properties
+			
+			// title
 			this.title = getPreference(TITLE_KEY);
 			
+			// the site-wide template id
 			var temp:String = getPreference(TEMPLATE_ID);
 			if(temp != null) {
 				this.templateID = int(temp);
 			} else {
 				this.templateID = -1;
 			}
+			
+			// load all site templates
+			var temples:ArrayList = ApplicationContext.templateService.getTemplates();
+			this.siteTemplates.removeAll();
+			this.siteTemplates.addAll(temples);
 		}
 		
 		public function saveSiteDetails():void {
