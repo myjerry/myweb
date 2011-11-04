@@ -19,8 +19,6 @@
 			import org.myjerry.myweb.ApplicationContext;
 			import org.myjerry.myweb.model.Project;
 			
-			private const projects:ArrayList = new ArrayList();
-			
 			private var currentlyLoadedProject:Project;
 			
 			override protected function initializationComplete():void {
@@ -30,9 +28,7 @@
 			}
 			
 			protected function loadAllProjects():void {
-				var proj:ArrayList = ApplicationContext.projectService.getAllProjects();
-				this.projects.removeAll();
-				this.projects.addAll(proj);
+				ApplicationContext.site.reloadProjects();
 				
 				if(this.currentlyLoadedProject != null) {
 					this.projectList.selectedItem = this.currentlyLoadedProject;
@@ -101,7 +97,7 @@
 	<s:HGroup height="100%" width="100%">
 		<s:VGroup width="250" height="100%">
 			<s:Label text="Available Projects" />
-			<s:List width="100%" height="100%" id="projectList" labelField="name" dataProvider="{this.projects}" />
+			<s:List width="100%" height="100%" id="projectList" labelField="name" dataProvider="{ApplicationContext.site.projects}" />
 		</s:VGroup>
 		
 		<s:Form width="100%" height="100%" id="projectsForm">
@@ -116,7 +112,7 @@
 			</s:FormItem>
 			
 			<s:FormItem label="Language" >
-				<s:ComboBox width="100%" id="language" />
+				<s:ComboBox width="100%" id="language" dataProvider="{ApplicationContext.site.languages}" labelField="name" />
 			</s:FormItem>
 			
 			<s:FormItem label="Host" >
@@ -138,6 +134,6 @@
 		
 		<s:Button label="Save" click="saveProject();" />
 		<s:Button label="Save As" click="saveNewProject();" />
-		<s:Button label="Cancel/Reset" click="reset()" />
+		<s:Button label="Reset" click="reset()" />
 	</s:HGroup>
 </s:NavigatorContent>

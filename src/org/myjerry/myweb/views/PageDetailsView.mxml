@@ -30,11 +30,12 @@
 			}
 			
 			protected function reset():void {
-				
-			}
-			
-			public function showPage(page:Page):void {
-				this.chosen = page;
+				var page:Page;
+				if(chosen != null) {
+					page = chosen;
+				} else {
+					page = new Page();
+				}
 				
 				this.pageTitle.text = page.title;
 				this.pagePath.text = page.path;
@@ -50,11 +51,19 @@
 				this.selectedItem = template;
 			}
 			
+			public function showPage(page:Page):void {
+				this.chosen = page;
+				
+				reset();
+			}
+			
 			protected function savePageDetails():void {
 				var page:Page;
+				var newPage:Boolean = false;
 				
 				if(this.chosen == null) {
 					page = new Page();
+					newPage = true;
 				} else {
 					page = chosen;
 				}
@@ -66,6 +75,11 @@
 				page.templateID = (this.templates.selectedItem as Template).templateID;
 				
 				ApplicationContext.pageService.savePage(page);
+				
+				if(newPage) {
+					// reload page list
+					ApplicationContext.site.reloadPages();
+				}
 			}
 			
 			protected function deletePage():void {

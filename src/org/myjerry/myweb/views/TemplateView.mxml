@@ -29,10 +29,7 @@
 			}
 			
 			protected function loadAllTemplates():void {
-				var temp:ArrayList = ApplicationContext.templateService.getTemplates();
-				
-				ApplicationContext.site.siteTemplates.removeAll();
-				ApplicationContext.site.siteTemplates.addAll(temp);
+				ApplicationContext.site.reloadTemplates();
 				
 				if(this.currentlyLoadedTemplate != null) {
 					this.templateList.selectedItem = this.currentlyLoadedTemplate;

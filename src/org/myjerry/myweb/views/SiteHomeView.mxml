@@ -51,9 +51,9 @@
 	<s:HGroup width="100%">
 		<s:Spacer width="100%" />
 		
-		<s:Button label="Generate Site" click="generateSite()" />
+		<s:Button label="Generate" click="generateSite()" />
 		
-		<s:Button label="Close Site" click="closeSite();" />
+		<s:Button label="Close" click="closeSite();" />
 	</s:HGroup>
 	
 </s:Group>

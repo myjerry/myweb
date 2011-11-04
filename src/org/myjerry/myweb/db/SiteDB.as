@@ -96,6 +96,18 @@ package org.myjerry.myweb.db {
 				"	FOREIGN KEY(id) REFERENCES pages(id)" +
 				")";
 			executeSQLQuery(query);
+			
+			query = "CREATE TABLE IF NOT EXISTS builds (" +
+				"	id				INTEGER PRIMARY KEY AUTOINCREMENT," +
+				"	name			TEXT NOT NULL," +
+				"	version			TEXT NOT NULL," +
+				"	md5				TEXT NOT NULL," +
+				"	sha				TEXT NOT NULL," +
+				"	downloadPath	TEXT NOT NULL," +
+				"	projectID		INTEGER," +
+				"	FOREIGN KEY(projectID) REFERENCES projects(id)" +
+				")";
+			executeSQLQuery(query);
 		}
 		
 	}

@@ -4,7 +4,8 @@
 					   xmlns:mx="library://ns.adobe.com/flex/mx" 
 					   xmlns:controls="org.myjerry.myweb.controls.*"
 					   initialize="onInit();"
-					   width="740" height="600">
+					   width="940" height="680"
+					   minWidth="740" minHeight="560">
 	<fx:Script>
 		<![CDATA[
 			import org.myjerry.myweb.ApplicationContext;

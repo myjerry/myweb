@@ -4,11 +4,73 @@
 					xmlns:mx="library://ns.adobe.com/flex/mx" 
 					width="100%" height="100%"
 					label="Builds">
+	<fx:Script>
+		<![CDATA[
+			import org.myjerry.myweb.ApplicationContext;
+		]]>
+	</fx:Script>
 	
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	
+	<s:layout>
+		<s:VerticalLayout />
+	</s:layout>
 	
+	<s:HGroup width="100%" height="100%">
+		<s:VGroup width="250" height="100%">
+			<s:Label text="Builds for project: " />
+			<s:ComboBox width="100%" dataProvider="{ApplicationContext.site.projects}" labelField="name" />
+			
+			<s:List id="buildsList" width="100%" height="100%" />
+		</s:VGroup>
+		
+		<s:Form width="100%" height="100%">
+			<s:FormHeading label="Project Builds" />
+			
+			<s:FormItem label="Name">
+				<s:TextInput id="buildName" width="100%" />
+			</s:FormItem>
+			
+			<s:FormItem label="Version">
+				<s:TextInput id="buildVersion" width="100%" />
+			</s:FormItem>
+			
+			<s:FormItem label="Project">
+				<s:ComboBox width="100%" dataProvider="{ApplicationContext.site.projects}" labelField="name" />
+			</s:FormItem>
+			
+			<s:FormItem label="Download File">
+				<s:TextInput id="downloadFile" enabled="false" width="100%" />
+				<s:Button label="Browse" />
+			</s:FormItem>
+			
+			<s:FormItem label="Download Path">
+				<s:TextInput id="downloadPath" enabled="false" width="100%" />
+			</s:FormItem>
+			
+			<s:FormItem label="MD5">
+				<s:TextInput id="buildMD5" enabled="false" width="100%" />
+			</s:FormItem>
+			
+			<s:FormItem label="SHA">
+				<s:TextInput id="buildSHA" enabled="false" width="100%" />
+			</s:FormItem>
+			
+		</s:Form>
+	</s:HGroup>
+	
+	<s:HGroup width="100%">
+		<s:Button label="Load" />
+		
+		<s:Button label="Delete" />
+		
+		<s:Spacer width="100%" />
+		
+		<s:Button label="Save" />
+		
+		<s:Button label="Reset" />
+	</s:HGroup>
 	
 </s:NavigatorContent>

@@ -18,8 +18,6 @@
 			
 			protected var current:Language = null;
 			
-			protected const languages:ArrayList = new ArrayList();
-			
 			override protected function initializationComplete():void {
 				super.initializationComplete();
 				
@@ -27,9 +25,7 @@
 			}
 			
 			protected function loadAllLanguages():void {
-				var temp:ArrayList = ApplicationContext.languageService.getAllLanguages();
-				languages.removeAll();
-				languages.addAll(temp);
+				ApplicationContext.site.reloadLanguages();
 			}
 			
 			protected function saveLanguage():void {
@@ -38,6 +34,9 @@
 				} else {
 					saveLanguageFromFormData(new Language());
 				}
+				
+				this.current = null;
+				reset();
 			}
 			
 			private function saveLanguageFromFormData(language:Language):void {
@@ -86,7 +85,7 @@
 	</s:layout>
 	
 	<s:HGroup width="100%" height="100%">
-		<s:List id="langList" width="250" height="100%" dataProvider="{this.languages}" labelField="name" />
+		<s:List id="langList" width="250" height="100%" dataProvider="{ApplicationContext.site.languages}" labelField="name" />
 		
 		<s:Form id="languageForm" width="100%">
 			<s:FormHeading label="Language Details" />

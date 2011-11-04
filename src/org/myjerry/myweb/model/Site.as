@@ -55,6 +55,12 @@ package org.myjerry.myweb.model {
 		
 		public const siteTemplates:ArrayList = new ArrayList();
 		
+		public const languages:ArrayList = new ArrayList();
+		
+		public const projects:ArrayList = new ArrayList();
+		
+		public const pages:ArrayList = new ArrayList();
+		
 		public function Site(siteFile:File) {
 			this.siteFile = siteFile;
 			this.database = new SiteDB(this.siteFile);
@@ -85,9 +91,40 @@ package org.myjerry.myweb.model {
 			}
 			
 			// load all site templates
+			reloadTemplates();
+			
+			// load all languages
+			reloadLanguages();
+			
+			// load all projects
+			reloadProjects();
+			
+			// load all pages
+			reloadPages();
+		}
+		
+		public function reloadTemplates():void {
 			var temples:ArrayList = ApplicationContext.templateService.getTemplates();
 			this.siteTemplates.removeAll();
 			this.siteTemplates.addAll(temples);
+		}
+		
+		public function reloadLanguages():void {
+			var langs:ArrayList = ApplicationContext.languageService.getAllLanguages();
+			this.languages.removeAll();
+			this.languages.addAll(langs);
+		}
+		
+		public function reloadProjects():void {
+			var projects:ArrayList = ApplicationContext.projectService.getAllProjects();
+			this.projects.removeAll();
+			this.projects.addAll(projects);
+		}
+		
+		public function reloadPages():void {
+			var pages:ArrayList = ApplicationContext.pageService.getAllPages();
+			this.pages.removeAll();
+			this.pages.addAll(pages);
 		}
 		
 		public function saveSiteDetails():void {
