@@ -32,7 +32,8 @@ package org.myjerry.myweb.db {
 		public function SiteDB(file:File) {
 			this.dbFile = file;
 
-			super();
+			// do not generate the database tables
+			super(false);
 		}
 		
 		override public function initialize():void {
@@ -56,6 +57,39 @@ package org.myjerry.myweb.db {
 				"    id       		INTEGER PRIMARY KEY AUTOINCREMENT," +
 				"    name      		TEXT NOT NULL," +
 				"    code		    TEXT" +
+				")";
+			executeSQLQuery(query);
+			
+			query = "CREATE TABLE IF NOT EXISTS pages (" +
+				"	id				INTEGER PRIMARY KEY AUTOINCREMENT," +
+				"	path			TEXT NOT NULL," +
+				"	searchable		BOOLEAN," +
+				"	title			TEXT," +
+				"	draft			BOOLEAN," +
+				"	templateID		INTEGER," +
+				"	userCreated		BOOLEAN," +
+				"	FOREIGN KEY(templateID) REFERENCES templates(id)" +
+				")";
+			executeSQLQuery(query);
+			
+			query = "CREATE TABLE IF NOT EXISTS languages (" +
+				"	id				INTEGER PRIMARY KEY AUTOINCREMENT," +
+				"	name			TEXT NOT NULL," +
+				"	extensions		TEXT NOT NULL" +
+				")";
+			executeSQLQuery(query);
+			
+			query = "CREATE TABLE IF NOT EXISTS sitePreferences (" +
+				"	id				INTEGER PRIMARY KEY AUTOINCREMENT," +
+				"	key				TEXT NOT NULL," +
+				"	value			TEXT" +
+				")";
+			executeSQLQuery(query);
+			
+			query = "CREATE TABLE IF NOT EXISTS pageContents (" +
+				"	id				INTEGER," +
+				"	content			TEXT NOT NULL," +
+				"	FOREIGN KEY(id) REFERENCES pages(id)" +
 				")";
 			executeSQLQuery(query);
 		}

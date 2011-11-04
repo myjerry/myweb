@@ -19,7 +19,12 @@
 			
 			protected function saveDetails():void {
 				ApplicationContext.site.title = this.siteTitle.text;
-				ApplicationContext.site.templateID = (this.templates.selectedItem as Template).templateID;
+				var template:Template = this.templates.selectedItem as Template;
+				if(template != null) {
+					ApplicationContext.site.templateID = template.templateID;
+				} else {
+					ApplicationContext.site.templateID = -1;
+				}
 				
 				ApplicationContext.site.saveSiteDetails();
 			}

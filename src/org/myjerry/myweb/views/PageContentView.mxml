@@ -11,6 +11,16 @@
 	<fx:Script>
 		<![CDATA[
 			import org.myjerry.myweb.ApplicationContext;
+			import org.myjerry.myweb.model.Page;
+			import org.myjerry.myweb.model.PageContent;
+			
+			private var chosen:Page = null;
+			
+			public function showPage(page:Page):void {
+				this.chosen = page;
+				
+				reset();
+			}
 			
 			protected function goBack():void {
 				ApplicationContext.popView();
@@ -21,11 +31,21 @@
 			}
 			
 			protected function savePageContent():void {
+				var pageContent:PageContent = new PageContent();
+				pageContent.pageID = chosen.pageID;
+				pageContent.content = this.pageContent.text;
 				
+				ApplicationContext.pageService.savePageContent(pageContent);
 			}
 			
 			protected function reset():void {
+				this.pageTitle.text = this.chosen.title;
 				
+				// get content
+				var pageContent:PageContent = ApplicationContext.pageService.getPageContent(this.chosen.pageID);
+				if(pageContent != null) {
+					this.pageContent.text = pageContent.content;
+				}
 			}
 		]]>
 	</fx:Script>

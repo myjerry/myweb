@@ -51,7 +51,11 @@
 			}
 			
 			protected function editPageContent():void {
+				var page:Page = this.pageList.selectedItem as Page;
 				
+				var view:PageContentView = new PageContentView();
+				ApplicationContext.pushView(view);
+				view.showPage(page);
 			}
 			
 			public function getPageLabel(item:Object):String {

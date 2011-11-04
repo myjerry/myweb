@@ -24,6 +24,12 @@
 				ApplicationContext.popView();
 			}
 			
+			override protected function initializationComplete():void {
+				super.initializationComplete();
+				
+				this.projectName.setFocus();
+			}
+			
 			protected function createNewProject():void {
 				if(AssertUtils.isEmptyString(this.projectName.text)) {
 					Alert.show("Project name cannot be null/empty.");

@@ -21,6 +21,9 @@
 
 package org.myjerry.myweb.service {
 	
+	import flash.data.SQLResult;
+	import flash.data.SQLStatement;
+	
 	import mx.collections.ArrayList;
 	
 	import org.myjerry.myweb.db.SiteDB;
@@ -51,8 +54,13 @@ package org.myjerry.myweb.service {
 		}
 		
 		public function savePageContent(pageContent:PageContent):Number {
-			this.database.save(pageContent);
-			return pageContent.pageID;
+			var statement:SQLStatement = this.database.getStatement("INSERT OR REPLACE INTO pageContents (id, content) VALUES (:id, :content)");
+			statement.parameters[":id"] = pageContent.pageID;
+			statement.parameters[":content"] = pageContent.content;
+			statement.execute();
+			
+			var result:SQLResult = statement.getResult();
+			return result.lastInsertRowID;
 		}
 		
 		public function getAllPages():ArrayList {

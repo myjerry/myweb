@@ -34,7 +34,7 @@ package org.myjerry.myweb.model {
 		[Column(name="path")]
 		public var path:String;
 
-		[Column(name="user_created")]
+		[Column(name="userCreated")]
 		public var userCreated:Boolean = true;
 		
 		[Column(name="searchable")]
