@@ -26,7 +26,7 @@ package org.myjerry.myweb.model {
 		
 		[Id]
 		[Column(name="id")]
-		public var projectID:uint;
+		public var projectID:uint = 0;
 		
 		[Column(name="name")]
 		public var name:String;

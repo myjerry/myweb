@@ -37,6 +37,8 @@ package org.myjerry.myweb {
 
 	public class ApplicationContext {
 		
+		public static const VERSION:String = "0.1";
+		
 		public static const instance:ApplicationContext = new ApplicationContext();
 		
 		private static var count:uint = 0;

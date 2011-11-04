@@ -56,7 +56,8 @@ package org.myjerry.myweb.db {
 			query = "CREATE TABLE IF NOT EXISTS templates (" +
 				"    id       		INTEGER PRIMARY KEY AUTOINCREMENT," +
 				"    name      		TEXT NOT NULL," +
-				"    code		    TEXT" +
+				"    code		    TEXT," +
+				"	 UNIQUE(name)" +
 				")";
 			executeSQLQuery(query);
 			
@@ -68,6 +69,7 @@ package org.myjerry.myweb.db {
 				"	draft			BOOLEAN," +
 				"	templateID		INTEGER," +
 				"	userCreated		BOOLEAN," +
+				"	UNIQUE(path)," +
 				"	FOREIGN KEY(templateID) REFERENCES templates(id)" +
 				")";
 			executeSQLQuery(query);
@@ -75,14 +77,16 @@ package org.myjerry.myweb.db {
 			query = "CREATE TABLE IF NOT EXISTS languages (" +
 				"	id				INTEGER PRIMARY KEY AUTOINCREMENT," +
 				"	name			TEXT NOT NULL," +
-				"	extensions		TEXT NOT NULL" +
+				"	extensions		TEXT NOT NULL," +
+				"	UNIQUE(name)" +
 				")";
 			executeSQLQuery(query);
 			
 			query = "CREATE TABLE IF NOT EXISTS sitePreferences (" +
 				"	id				INTEGER PRIMARY KEY AUTOINCREMENT," +
 				"	key				TEXT NOT NULL," +
-				"	value			TEXT" +
+				"	value			TEXT," +
+				"	UNIQUE(key)" +
 				")";
 			executeSQLQuery(query);
 			

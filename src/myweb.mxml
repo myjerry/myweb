@@ -7,12 +7,13 @@
 					   width="740" height="600">
 	<fx:Script>
 		<![CDATA[
+			import org.myjerry.myweb.ApplicationContext;
 			import org.myjerry.myweb.views.HomePageView;
 			
 			protected function onInit():void {
 				this.myViewStack.push(new HomePageView());
 				
-				this.statusText.text = "Version 0.1";
+				this.statusText.text = "Version " + ApplicationContext.VERSION;
 			}
 		]]>
 	</fx:Script>

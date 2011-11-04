@@ -13,13 +13,16 @@
 			import org.myjerry.myweb.model.Page;
 			import org.myjerry.myweb.model.Template;
 			
+			[Bindable]
 			private var chosen:Page = null;
 			
 			[Bindable]
 			private var selectedItem:Template = null;
 			
 			protected function editPageContent():void {
-				ApplicationContext.pushView(new PageContentView());
+				var view:PageContentView = new PageContentView();
+				ApplicationContext.pushView(view);
+				view.showPage(this.chosen);
 			}
 			
 			protected function goBack():void {
@@ -39,6 +42,11 @@
 				this.draftPage.selected = page.isDraft;
 				
 				var template:Template = ApplicationContext.templateService.getTemplate(page.templateID);
+				if(template == null) {
+					// try and get the template from site wide properties
+					template = ApplicationContext.templateService.getTemplate(ApplicationContext.site.templateID);
+				}
+				
 				this.selectedItem = template;
 			}
 			
@@ -67,13 +75,6 @@
 				}
 			}
 			
-			protected function publishPage():void {
-				
-			}
-			
-			protected function makePageDraft():void {
-				
-			}
 		]]>
 	</fx:Script>
 	
@@ -89,7 +90,7 @@
 		</s:FormItem>
 		
 		<s:FormItem label="Path">
-			<s:TextInput id="pagePath" />
+			<s:TextInput id="pagePath" enabled="{this.chosen.userCreated}" />
 		</s:FormItem>
 		
 		<s:FormItem label="Template to use" >
@@ -101,7 +102,7 @@
 		</s:FormItem>
 		
 		<s:FormItem label="Draft" >
-			<s:CheckBox id="draftPage" enabled="false" />
+			<s:CheckBox id="draftPage" enabled="{this.chosen.userCreated}" />
 		</s:FormItem>
 		
 	</s:Form>
@@ -112,10 +113,6 @@
 		<s:Button label="Edit Content" click="editPageContent()" />
 		
 		<s:Button label="Save" click="savePageDetails()" />
-		
-		<s:Button label="Publish" click="publishPage()" />
-		
-		<s:Button label="Make Draft" click="makePageDraft()" />
 		
 		<s:Button label="Reset" click="reset()" />
 		

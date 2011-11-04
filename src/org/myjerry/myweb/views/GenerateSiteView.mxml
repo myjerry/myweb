@@ -66,13 +66,28 @@
 		<s:VerticalLayout/>
 	</s:layout>
 	
-	<s:CheckBox label="Create folder on desktop" id="desktopDirectory" change="onCheckBoxChange()"/>
-
-	<s:HGroup width="100%">
-		<s:Label text="Folder:" />
-		<s:TextInput id="folder" width="100%" />
-		<s:Button label="Browse..." click="browseForFolder();" />
-	</s:HGroup>
+	<s:Form width="100%" height="100%">
+		<s:FormHeading label="Generate Site..." />
+		
+		<s:FormItem label="Location">
+			<s:CheckBox label="Create folder on desktop" id="desktopDirectory" change="onCheckBoxChange()"/>
+			
+			<s:HGroup width="100%">
+				<s:Label text="Folder:" />
+				<s:TextInput id="folder" width="100%" />
+				<s:Button label="Browse..." click="browseForFolder();" />
+			</s:HGroup>
+		</s:FormItem>
+		
+		<s:FormItem label="Format generated HTML files" >
+			<s:CheckBox />
+		</s:FormItem>
+		
+		<s:FormItem label="Check Link Validity">
+			<s:CheckBox />
+		</s:FormItem>
+	</s:Form>
+	
 	
 	<s:HGroup width="100%">
 		<s:Spacer width="100%" />

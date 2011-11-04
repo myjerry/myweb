@@ -99,8 +99,12 @@ package org.myjerry.myweb.generate {
 		}
 		
 		private function getSiteModel():DataModel {
-			// set the site properties
 			var model:DataModel = new DataModel();
+
+			// add myweb properties
+			model.putValue('mywebVersion', ApplicationContext.VERSION);
+			
+			// set the site properties
 			model.putValue('siteTitle', site.title);
 			
 			return model;

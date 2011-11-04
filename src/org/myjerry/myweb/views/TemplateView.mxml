@@ -117,7 +117,7 @@
 		
 		<s:Button label="Save" click="saveTemplate()" />
 		<s:Button label="Save As" click="saveNewTemplate()" />
-		<s:Button label="Cancel/Reset" click="reset()" />
+		<s:Button label="Reset" click="reset()" />
 	</s:HGroup>
 	
 </s:NavigatorContent>

@@ -26,7 +26,9 @@ package org.myjerry.myweb.service {
 	
 	import mx.collections.ArrayList;
 	
+	import org.myjerry.myweb.ApplicationContext;
 	import org.myjerry.myweb.db.SiteDB;
+	import org.myjerry.myweb.model.Page;
 	import org.myjerry.myweb.model.Project;
 	
 	public class ProjectService {
@@ -40,7 +42,25 @@ package org.myjerry.myweb.service {
 		}
 		
 		public function saveProject(project:Project):Number {
+			var newProject:Boolean = false;
+			if(project.projectID == 0) {
+				newProject = true;
+			}
+			
+			// save this project
 			this.database.save(project);
+			
+			// if this is a new project, then create its corresponding page
+			if(newProject) {
+				var page:Page = new Page();
+				page.path = '/' + project.name + '/index.html';
+				page.title = project.name;
+				page.userCreated = false;
+				
+				ApplicationContext.pageService.savePage(page);
+			}
+			
+			// return the project ID back
 			return project.projectID;
 		}
 		

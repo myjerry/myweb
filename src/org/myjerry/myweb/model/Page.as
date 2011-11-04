@@ -34,6 +34,7 @@ package org.myjerry.myweb.model {
 		[Column(name="path")]
 		public var path:String;
 
+		[Bindable]
 		[Column(name="userCreated")]
 		public var userCreated:Boolean = true;
 		
